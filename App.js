@@ -8,6 +8,7 @@
 
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View, SafeAreaView} from 'react-native';
+import TodoListComponent from './TodoListComponent';
 
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
@@ -18,11 +19,18 @@ const instructions = Platform.select({
 
 type Props = {};
 export default class App extends Component<Props> {
+  constructor(Props) {
+    super(Props)
+    this.state = {
+      todoList: [{ title: 'Eat', status: false }, { title: 'Play', status: false }, { title: 'Sleep', status: false }],
+    };
+  }
   render() {
     return (
       <SafeAreaView style= {{flex: 1, backgroundColor: '#000fff'}}>
         <View style={styles.container}>
           <Text style={styles.welcome}>Welcome to React Native!</Text>
+          <TodoListComponent todoList={this.state.todoList}  />
         </View>
       </SafeAreaView>
     );
