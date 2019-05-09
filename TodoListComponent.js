@@ -3,6 +3,7 @@ import {
   Text,
   View,
   StyleSheet,
+  TouchableOpacity,
 } from 'react-native';
 
 export default class TodoListComponent extends Component {
@@ -11,6 +12,9 @@ export default class TodoListComponent extends Component {
     this.state = {
       todoList: this.props.todoList,
     };
+  }
+  toggleTodo(index) {
+    this.props.toggleTodo && this.props.toggleTodo(index)
   }
 
   render() {
@@ -21,7 +25,9 @@ export default class TodoListComponent extends Component {
             (todo, index) => {
               var finishStyle = {textDecorationLine:'line-through', color:'gray'}
               return (
-                <Text style = {[styles.todo,todo.status&&finishStyle]}>{todo.title}</Text>
+                <TouchableOpacity onPress = {()=>this.toggleTodo(index)}>
+                  <Text style = {[styles.todo,todo.status&&finishStyle]}>{todo.title}</Text>
+                </TouchableOpacity>
               )
             }
           )

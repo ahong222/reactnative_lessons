@@ -6,8 +6,8 @@
  * @flow
  */
 
-import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View, SafeAreaView} from 'react-native';
+import React, { Component } from 'react';
+import { Platform, StyleSheet, Text, View, SafeAreaView } from 'react-native';
 import TodoListComponent from './TodoListComponent';
 
 const instructions = Platform.select({
@@ -25,12 +25,22 @@ export default class App extends Component<Props> {
       todoList: [{ title: 'Eat', status: false }, { title: 'Play', status: false }, { title: 'Sleep', status: false }],
     };
   }
+  toggleTodo(index) {
+    var todoList = this.state.todoList
+    var todo = todoList[index]
+    if (todo) {
+      todo.status = !todo.status
+      this.setState({
+        todoList: todoList
+      })
+    }
+  }
   render() {
     return (
-      <SafeAreaView style= {{flex: 1, backgroundColor: '#000fff'}}>
+      <SafeAreaView style={{ flex: 1, backgroundColor: '#000fff' }}>
         <View style={styles.container}>
           <Text style={styles.welcome}>Welcome to React Native!</Text>
-          <TodoListComponent todoList={this.state.todoList}  />
+          <TodoListComponent todoList={this.state.todoList} toggleTodo={(index) => { this.toggleTodo(index) }} />
         </View>
       </SafeAreaView>
     );
@@ -41,7 +51,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'flex-start',
-    alignItems:'center',
+    alignItems: 'center',
     backgroundColor: '#F5FCFF',
   },
   welcome: {
