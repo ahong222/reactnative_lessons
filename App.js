@@ -9,6 +9,7 @@
 import React, { Component } from 'react';
 import { Platform, StyleSheet, Text, View, SafeAreaView } from 'react-native';
 import TodoListComponent from './TodoListComponent';
+import NewTodoComponent from './NewTodoComponent';
 
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
@@ -35,11 +36,22 @@ export default class App extends Component<Props> {
       })
     }
   }
+  addTodo(text) {
+    var todoList = this.state.todoList
+    todoList.push({
+      title: text,
+      status: false
+    })
+    this.setState({
+      todoList: todoList
+    })
+  }
   render() {
     return (
       <SafeAreaView style={{ flex: 1, backgroundColor: '#000fff' }}>
         <View style={styles.container}>
           <Text style={styles.welcome}>Welcome to React Native!</Text>
+          <NewTodoComponent addTodo={(text)=>{this.addTodo(text)}}></NewTodoComponent>
           <TodoListComponent todoList={this.state.todoList} toggleTodo={(index) => { this.toggleTodo(index) }} />
         </View>
       </SafeAreaView>
