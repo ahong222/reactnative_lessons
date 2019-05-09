@@ -21,7 +21,7 @@ export default class TodoListComponent extends Component {
             (todo, index) => {
               var finishStyle = {textDecorationLine:'line-through', color:'gray'}
               return (
-                <Text style = {[styles.todo]}>{todo.title}</Text>
+                <Text style = {[styles.todo,todo.status&&finishStyle]}>{todo.title}</Text>
               )
             }
           )
