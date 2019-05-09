@@ -1,0 +1,17 @@
+{
+  "extends": [
+    "tslint-config-standard",
+    "tslint-react"
+  ],
+  "rules": {
+    "jsx-no-lambda": false,
+    "jsx-no-multiline-js": false,
+    "jsx-no-bind": false
+  },
+  "linterOptions": {
+    "exclude": [
+      "debugger_app/**",
+      "dist/**"
+    ]
+  }
+}
