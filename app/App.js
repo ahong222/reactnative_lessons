@@ -11,7 +11,8 @@ import { Platform, StyleSheet, Text, View, SafeAreaView } from 'react-native';
 import HomeContainer from './HomeContainer';
 import { createStore, combineReducers, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
-import { TOGGLE_STATUS, NEW_TODO } from './actions';
+import fetchData, { TOGGLE_STATUS, NEW_TODO, INIT_TODO_LIST } from './actions';
+import thunk from 'redux-thunk';
 
 const initState = {
   todos: [
@@ -21,9 +22,31 @@ const initState = {
   ],
 };
 
+export function initTodoList(){                       // 定义新的 action creator
+  return function(dispatch){
+      fetchData('list_message').then((data)=>{      // 使用 fetch 调用远程数据
+          dispatch({                                // 执行 dispatch(action)
+              type: INIT_TODO_LIST,
+              list: data.todos,
+          })
+      });
+  }
+}
+
+
 function todoList(state = [], action) {
   console.log('todoList index:' + JSON.stringify(action))
   switch (action.type) {
+    case INIT_TODO_LIST:                             // 添加新的 action 类型分支，INIT_TODO_LIST
+            return [
+                ...state,
+                // action.list.slice()
+                ...action.list.map((todo)=>{ return {
+                    id: todo.id,
+                    title: todo.title,
+                    status: todo.status,
+                }})
+            ];
     case TOGGLE_STATUS:
 
       var todo = state[action.index];
@@ -56,23 +79,24 @@ const reducers = combineReducers({
 });
 
 
-let store = createStore(reducers, initState)
+// let store = createStore(reducers, initState)
 
 // 使用中间件
-// var thunkMiddleware = function ({ dispatch, getState }) {        // 定义中间件
-//   console.log('Enter thunkMiddleware');
-//   return function(next) {
-//       console.log('－－－－－－－－》 Function "next" provided:', next);
-//       return function (action) {
-//           console.log('－－－－－－－－》 Handling action:', action);
-//           return typeof action === 'function' ?
-//               action(dispatch, getState) :
-//               next(action)
-//       }
-//   }
-// }
-// let newCreateStoreFunction = applyMiddleware(thunkMiddleware)(createStore)
-// let store = newCreateStoreFunction(reducers, initState)
+var thunkMiddleware = function ({ dispatch, getState }) {        // 定义中间件
+  console.log('Enter thunkMiddleware');
+  return function(next) {
+      console.log('－－－－－－－－》 Function "next" provided:', next);
+      return function (action) {
+          console.log('－－－－－－－－》 Handling action:', action);
+          return typeof action === 'function' ?
+              action(dispatch, getState) :
+              next(action)
+      }
+  }
+}
+//使用thunk 代替自己写的中间件thunkMiddleware
+let newCreateStoreFunction = applyMiddleware(thunk)(createStore)
+let store = newCreateStoreFunction(reducers, initState)
 
 
 export default class App extends Component<Props> {

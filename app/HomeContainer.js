@@ -11,6 +11,7 @@ import { Platform, StyleSheet, Text, View, SafeAreaView } from 'react-native';
 import TodoListComponent from './components/TodoListComponent';
 import NewTodoComponent from './components/NewTodoComponent';
 import { connect } from 'react-redux';
+import { initTodoList } from './App';
 
 
 
@@ -18,6 +19,11 @@ type Props = {};
 class HomeContainer extends Component<Props> {
   constructor(Props) {
     super(Props)
+  }
+
+  componentDidMount() {
+    let { dispatch } = this.props;
+    dispatch(initTodoList());
   }
   
   render() {
