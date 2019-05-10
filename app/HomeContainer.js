@@ -8,18 +8,13 @@
 
 import React, { Component } from 'react';
 import { Platform, StyleSheet, Text, View, SafeAreaView } from 'react-native';
-import TodoListComponent from './TodoListComponent';
-import NewTodoComponent from './NewTodoComponent';
+import TodoListComponent from './components/TodoListComponent';
+import NewTodoComponent from './components/NewTodoComponent';
 
-const instructions = Platform.select({
-  ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
-  android:
-    'Double tap R on your keyboard to reload,\n' +
-    'Shake or press menu button for dev menu',
-});
+
 
 type Props = {};
-export default class App extends Component<Props> {
+export default class HomeContainer extends Component<Props> {
   constructor(Props) {
     super(Props)
     this.state = {
@@ -51,8 +46,9 @@ export default class App extends Component<Props> {
       <SafeAreaView style={{ flex: 1, backgroundColor: '#000fff' }}>
         <View style={styles.container}>
           <Text style={styles.welcome}>Welcome to React Native!</Text>
-          <NewTodoComponent addTodo={(text)=>{this.addTodo(text)}}></NewTodoComponent>
-          <TodoListComponent todoList={this.state.todoList} toggleTodo={(index) => { this.toggleTodo(index) }} />
+          {/* <NewTodoComponent addTodo={(text)=>{this.addTodo(text)}}></NewTodoComponent> */}
+          {/* <TodoListComponent todoList={this.state.todoList} toggleTodo={(index) => { this.toggleTodo(index) }} /> */}
+          <TodoListComponent todoList={[{title:'测试数据00'}]} ></TodoListComponent>
         </View>
       </SafeAreaView>
     );

@@ -34,7 +34,7 @@ export default class NewTodoComponent extends Component {
     return (
       <View style={styles.wrapper}>
         <TextInput style={styles.input} onChangeText={(text) => { this.setTodo(text) }} ></TextInput>
-        <Button title="添加" onPress={() => { this.addTodo() }}></Button>
+        <Button title="ADD" onPress={() => { this.addTodo() }}></Button>
       </View>
     )
   }
