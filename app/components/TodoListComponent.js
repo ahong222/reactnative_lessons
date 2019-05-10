@@ -15,12 +15,18 @@ class TodoListComponent extends Component {
     console.log('mapStateToProps todoList:'+JSON.stringify(props))
   }
   toggleTodo(index) {
-    // this.props.toggleTodo && this.props.toggleTodo(index) 原始方法
-    //redux 方法，使用action
-    // 从 props 里解构出 dispatch，因此这里也要用到connect
-    let { dispatch } = this.props;              
-    //changeTodoStatus:将数据转换成action
-    dispatch(changeTodoStatus(index));          // 执行 dispatch(action)
+    // // this.props.toggleTodo && this.props.toggleTodo(index) 原始方法
+    // //redux 方法，使用action
+    // // 从 props 里解构出 dispatch，因此这里也要用到connect
+    // let { dispatch } = this.props;              
+    // //changeTodoStatus:将数据转换成action
+    // dispatch(changeTodoStatus(index));          // 执行 dispatch(action)
+
+    setTimeout(() => {                          // 延迟执行
+      let { dispatch } = this.props;
+      //changeTodoStatus:将数据转换成action
+      dispatch(changeTodoStatus(index));          // 执行 dispatch(action)
+    }, 2000);
   }
 
   render() {

@@ -9,7 +9,7 @@
 import React, { Component } from 'react';
 import { Platform, StyleSheet, Text, View, SafeAreaView } from 'react-native';
 import HomeContainer from './HomeContainer';
-import { createStore, combineReducers } from 'redux'
+import { createStore, combineReducers, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
 import { TOGGLE_STATUS, NEW_TODO } from './actions';
 
@@ -56,7 +56,23 @@ const reducers = combineReducers({
 });
 
 
-let store = createStore(reducers, initState)
+// let store = createStore(reducers, initState)
+
+var thunkMiddleware = function ({ dispatch, getState }) {        // 定义中间件
+  console.log('Enter thunkMiddleware');
+  return function(next) {
+      console.log('－－－－－－－－》 Function "next" provided:', next);
+      return function (action) {
+          console.log('－－－－－－－－》 Handling action:', action);
+          return typeof action === 'function' ?
+              action(dispatch, getState) :
+              next(action)
+      }
+  }
+}
+let newCreateStoreFunction = applyMiddleware(thunkMiddleware)(createStore)
+let store = newCreateStoreFunction(reducers, initState)
+
 
 export default class App extends Component<Props> {
   constructor(Props) {
