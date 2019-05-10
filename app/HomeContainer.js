@@ -21,11 +21,14 @@ class HomeContainer extends Component<Props> {
   }
   
   render() {
+    // console.log(JSON.stringify(this.props.todoList))
+    // console.log('--------------------------')
+    console.log('mapStateToProps props:'+JSON.stringify(this.props.todoList))
     return (
       <SafeAreaView style={{ flex: 1, backgroundColor: '#000fff' }}>
         <View style={styles.container}>
           <Text style={styles.welcome}>Welcome to React Native!</Text>
-          {/* <NewTodoComponent addTodo={(text)=>{this.addTodo(text)}}></NewTodoComponent> */}
+          <NewTodoComponent ></NewTodoComponent>
           {/* <TodoListComponent todoList={this.state.todoList} toggleTodo={(index) => { this.toggleTodo(index) }} /> */}
           <TodoListComponent todoList={this.props.todoList} ></TodoListComponent>
         </View>
@@ -35,6 +38,7 @@ class HomeContainer extends Component<Props> {
 }
 
 function mapStateToProps(state){
+  console.log('mapStateToProps state:'+JSON.stringify(state))
   return {
       todoList: state.todos,  // 将全局的 state 的其中一个 key(即todos) 作为 props 注入
   }

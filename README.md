@@ -31,4 +31,5 @@ function mapStateToProps(state){
 export default connect(mapStateToProps)(HomeContainer)
 
 这样就可以通过 this.props.todoList来使用了
+如果不需要从state中取数据到props。connect(null)(TodoListComponent)即可
 

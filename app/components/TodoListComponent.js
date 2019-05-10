@@ -5,23 +5,30 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from 'react-native';
+import { changeTodoStatus } from '../actions';
+import { connect } from 'react-redux';
 
-export default class TodoListComponent extends Component {
+
+class TodoListComponent extends Component {
   constructor(props) {
     super(props)
-    this.state = {
-      todoList: this.props.todoList,
-    };
+    console.log('mapStateToProps todoList:'+JSON.stringify(props))
   }
   toggleTodo(index) {
-    this.props.toggleTodo && this.props.toggleTodo(index)
+    // this.props.toggleTodo && this.props.toggleTodo(index) 原始方法
+    //redux 方法，使用action
+    // 从 props 里解构出 dispatch，因此这里也要用到connect
+    let { dispatch } = this.props;              
+    //changeTodoStatus:将数据转换成action
+    dispatch(changeTodoStatus(index));          // 执行 dispatch(action)
   }
 
   render() {
+    console.log('todoList1:'+JSON.stringify(this.props.todoList1))
     return (
       <View style={styles.wrapper}>
         {
-          this.state.todoList.map(
+          this.props.todoList.map(
             (todo, index) => {
               var finishStyle = {textDecorationLine:'line-through', color:'gray'}
               return (
@@ -47,3 +54,11 @@ const styles = StyleSheet.create(
     }
   }
 )
+
+function mapStateToProps(state){
+  return {
+      todoList1: state.todos,  // 将全局的 state 的其中一个 key(即todos) 作为 props 注入
+  }
+}
+
+export default connect(mapStateToProps)(TodoListComponent)

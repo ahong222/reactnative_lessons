@@ -9,8 +9,9 @@
 import React, { Component } from 'react';
 import { Platform, StyleSheet, Text, View, SafeAreaView } from 'react-native';
 import HomeContainer from './HomeContainer';
-import {createStore, combineReducers } from 'redux'
-import { Provider } from 'react-redux';  
+import { createStore, combineReducers } from 'redux'
+import { Provider } from 'react-redux'
+import { TOGGLE_STATUS, NEW_TODO } from './actions';
 
 const initState = {
   todos: [
@@ -21,7 +22,33 @@ const initState = {
 };
 
 function todoList(state = [], action) {
-  return state;
+  console.log('todoList index:' + JSON.stringify(action))
+  switch (action.type) {
+    case TOGGLE_STATUS:
+
+      var todo = state[action.index];
+      
+      let  newState = [
+        ...state.slice(0, action.index),
+        Object.assign({}, todo, {
+          status: !todo.status
+        }),
+        ...state.slice(action.index + 1)
+      ]
+      console.log('TOGGLE_STATUS index:'+action.index + ' delete:'+newState[action.index].status)
+      return newState
+    case NEW_TODO:
+      var title = action.title;
+      return [
+        ...state.slice(),
+        {
+          title:title,
+          status:false
+        },
+      ]
+    default:
+      return state
+  }
 }
 
 const reducers = combineReducers({
