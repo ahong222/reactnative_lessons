@@ -22,6 +22,7 @@ class HomeContainer extends Component<Props> {
   }
 
   componentDidMount() {
+    console.log('todoList init componentDidMount')
     let { dispatch } = this.props;
     dispatch(initTodoList());
   }

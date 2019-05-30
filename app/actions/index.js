@@ -36,7 +36,7 @@ export default function fetchData(action, params, method='get'){
 }
 
 export function fetchDataAction(params) {
-  console.log('todoList fetchDataAction')
+  console.log('todoList init fetchDataAction')
   return fetchPromize().then(
     (response)=>{
       console.log('promize data:'+response)
